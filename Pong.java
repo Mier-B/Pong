@@ -12,10 +12,11 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     private int player2Y = 200;
     private int ballX = 300;
     private int ballY = 200;
-    private int ballXdir = -1;
+    private int ballXdir = -2;
     private int ballYdir = -2;
     private int player1Score = 0;
     private int player2Score = 0;
+    private static TitleScreen title;
 
 
     public Pong() {
@@ -24,6 +25,8 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
         timer.start();
+        title = new TitleScreen();
+     
     }
 
 
@@ -39,14 +42,18 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
         g.fillRect(540, player2Y, 10, 50);
 
         // draw the ball
-        g.setColor(Color.white);
+        g.setColor(Color.yellow);
         g.fillOval(ballX, ballY, 20, 20);
 
         // draw the scores
-        g.setColor(Color.white);
+        g.setColor(Color.red);
         g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString("" + player1Score, 150, 50);
-        g.drawString("" + player2Score, 450, 50);
+        g.drawString("Player 1" , 110,25);
+        g.setColor(Color.blue);
+        g.drawString("Player 2",  410, 25);
+        g.setColor(Color.white);
+        g.drawString("" + player1Score, 150, 60);
+        g.drawString("" + player2Score, 450, 60);
     }
 
     //Is getting Called every time the set delay time is up. // Changes the Position of the Balls and the Paddels and Checks for Bounces and Scores
@@ -86,6 +93,10 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
 
     //Read KeyInput
     public void keyPressed(KeyEvent e) {
+
+
+      
+        
 
         //Player2 Movement Up 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -129,5 +140,6 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
         frame.setSize(600, 400);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
     }
 }
