@@ -12,8 +12,8 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     private int player2Y = 200;
     private int ballX = 300;
     private int ballY = 200;
-    private int ballXdir = -3; 
-    private int ballYdir = -3;
+    private int ballXdir = -2; 
+    private int ballYdir = -2;
     private int player1Score = 0;
     private int player2Score = 0;
     private static TitleScreen title;
@@ -98,36 +98,38 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
             
         }
 
-        // detect collisions with walls
-        if (ballY < 0 || ballY > 380) {
-            ballYdir = -ballYdir;
-        }
-
-        // detect collisions with paddles
-        if (ballX <= 60) {
-            if (ballY >= player1Y && ballY <= player1Y + 50) {
-                ballXdir = -ballXdir;
-            } else {
-                player2Score++;
-                ballX = 300;
-                ballY = 200;
-            }
-        }
-
-        if (ballX >= 520) {
-            if (ballY >= player2Y && ballY <= player2Y + 50) {
-                ballXdir = -ballXdir;
-            } else {
-                player1Score++;
-                ballX = 300;
-                ballY = 200;
-            }
-        }
+     collisionAndScore();
 
         repaint(); //Is making the Changes Visable by Deleting Everything and Redraw the the Status
     }
 
+public void collisionAndScore(){
+       // detect collisions with walls
+       if (ballY < 0 || ballY > 380) {
+        ballYdir = -ballYdir;
+    }
 
+    // detect collisions with paddles
+    if (ballX <= 60) {
+        if (ballY >= player1Y && ballY <= player1Y + 50) {
+            ballXdir = -ballXdir;
+        } else {
+            player2Score++;
+            ballX = 300;
+            ballY = 200;
+        }
+    }
+
+    if (ballX >= 520) {
+        if (ballY >= player2Y && ballY <= player2Y + 50) {
+            ballXdir = -ballXdir;
+        } else {
+            player1Score++;
+            ballX = 300;
+            ballY = 200;
+        }
+    }
+}
     //Switch from TitleScreen to the Game
     public void startGame(){
         //Rearange the Size of the Window
