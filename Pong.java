@@ -12,26 +12,52 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     private int player2Y = 200;
     private int ballX = 300;
     private int ballY = 200;
-    private int ballXdir = -2;
-    private int ballYdir = -2;
+    private int ballXdir = -3; 
+    private int ballYdir = -3;
     private int player1Score = 0;
     private int player2Score = 0;
     private static TitleScreen title;
-
+    private JFrame frame;
+    private JButton startButton;
+  
 
     public Pong() {
+        
+        //Make the Game responsive to input
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
+        
+        //Used to call the Actionperformed method to repaint everything reguraly
         timer = new Timer(delay, this);
-        timer.start();
+       
+       //Define the TitleScreen and the StartButton
         title = new TitleScreen();
+        startButton =new JButton();
+        startButton.addActionListener(this);
+        
+        //Adding the TitleScreen and the Button to the Frame
+        frame = new JFrame("Pong");
+        frame.setSize(600, 400);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(title);
+        frame.add(startButton,BorderLayout.SOUTH);
+    
+        //Make the Button invisable
+        startButton.setOpaque(false);
+        startButton.setContentAreaFilled(false);
+        startButton.setBorderPainted(false);
+      
+
+
      
     }
 
 
     //Painting the Start of the Game
     public void paint(Graphics g) {
+        
         // draw the background
         g.setColor(Color.black);
         g.fillRect(0, 0, 600, 400);
@@ -58,8 +84,19 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
 
     //Is getting Called every time the set delay time is up. // Changes the Position of the Balls and the Paddels and Checks for Bounces and Scores
     public void actionPerformed(ActionEvent e) {
+       
+    
+       //move the Ball
         ballX += ballXdir;
         ballY += ballYdir;
+
+
+        //Call the StartGame Method when the SpaceBar is pressed
+        if(e.getSource()==startButton){
+          
+           startGame();
+            
+        }
 
         // detect collisions with walls
         if (ballY < 0 || ballY > 380) {
@@ -91,12 +128,29 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     }
 
 
+    //Switch from TitleScreen to the Game
+    public void startGame(){
+        //Rearange the Size of the Window
+        this.setBackground(Color.BLACK);
+        this.setPreferredSize(new Dimension(600, 400 ));
+        
+        //delete the TitleScreen
+        frame.getContentPane().removeAll();
+
+        //Add the Game , make it listen and start the Timer
+        frame.getContentPane().add(this);
+        frame.pack();
+        this.requestFocus();
+        frame.repaint();
+        timer.start();
+    }
+       
+    
+
     //Read KeyInput
     public void keyPressed(KeyEvent e) {
 
-
-      
-        
+       
 
         //Player2 Movement Up 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -134,12 +188,8 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Pong"); //Creating the Window
         Pong game = new Pong(); //Initaliing the Game
-        frame.add(game); //Adding the Game to the Windom
-        frame.setSize(600, 400);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  
       
     }
 }

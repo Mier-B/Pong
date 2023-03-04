@@ -7,9 +7,9 @@ public class TitleScreen extends JPanel{
 boolean next ;
    
 
-public TitleScreen(){
-    
-}
+
+
+//Painting the Screen
     public void paint(Graphics g){
 
         g.setColor(Color.black);
