@@ -4,8 +4,10 @@ import javax.swing.*;
 
 public class Pong extends JPanel implements KeyListener, ActionListener {
 
+
+    //Setting up every Variable needed. Names Explain their Function
     private Timer timer;
-    private int delay = 8;
+    private int delay = 8; //in ms
     private int player1Y = 200;
     private int player2Y = 200;
     private int ballX = 300;
@@ -15,6 +17,7 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     private int player1Score = 0;
     private int player2Score = 0;
 
+
     public Pong() {
         addKeyListener(this);
         setFocusable(true);
@@ -23,6 +26,8 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
         timer.start();
     }
 
+
+    //Painting the Start of the Game
     public void paint(Graphics g) {
         // draw the background
         g.setColor(Color.black);
@@ -44,8 +49,8 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
         g.drawString("" + player2Score, 450, 50);
     }
 
+    //Is getting Called every time the set delay time is up. // Changes the Position of the Balls and the Paddels and Checks for Bounces and Scores
     public void actionPerformed(ActionEvent e) {
-        timer.start();
         ballX += ballXdir;
         ballY += ballYdir;
 
@@ -75,25 +80,33 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
             }
         }
 
-        repaint();
+        repaint(); //Is making the Changes Visable by Deleting Everything and Redraw the the Status
     }
 
+
+    //Read KeyInput
     public void keyPressed(KeyEvent e) {
+
+        //Player2 Movement Up 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             if (player2Y > 0) {
                 player2Y -= 20;
             }
         }
+
+        //Player2 Movement Down
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             if (player2Y < 350) {
                 player2Y += 20;
             }
         }
+         //Player1 Movement Up
         if (e.getKeyCode() == KeyEvent.VK_W) {
             if (player1Y > 0) {
                 player1Y -= 20;
             }
         }
+         //Player1 Movement Down
         if (e.getKeyCode() == KeyEvent.VK_S) {
             if (player1Y < 350) {
                 player1Y += 20;
@@ -101,6 +114,8 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
         }
     }
 
+
+    //Needs to be implemented because of the Interface but not Used so they can stay empty
     public void keyTyped(KeyEvent e) {
     }
 
@@ -108,9 +123,9 @@ public class Pong extends JPanel implements KeyListener, ActionListener {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Pong");
-        Pong game = new Pong();
-        frame.add(game);
+        JFrame frame = new JFrame("Pong"); //Creating the Window
+        Pong game = new Pong(); //Initaliing the Game
+        frame.add(game); //Adding the Game to the Windom
         frame.setSize(600, 400);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
